@@ -20,7 +20,7 @@ pipeline {
             steps{
                 script{
                     bat 'npm start &'
-                    bat 'wait-on https://localhost:8082'
+                    bat 'wait-on https://localhost:8081'
                     bat 'npm test'
                 }
             }
