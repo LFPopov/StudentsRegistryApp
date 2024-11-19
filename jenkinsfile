@@ -10,7 +10,7 @@ pipeline {
 
         stage('Install dependencies'){
             steps{
-                scrypt{
+                script{
                     bat 'npm install'
                 }
             }
@@ -18,7 +18,7 @@ pipeline {
 
         stage('Start application and run tests'){
             steps{
-                scrypt{
+                script{
                     bat 'npm start &'
                     bat 'wait-on https://localhost:8082'
                     bat 'npm test'
