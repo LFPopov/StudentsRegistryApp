@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    environment {
+        NODE_VERSION = '20.x'
+    }
+
+    tools (
+        nodejs "${NODE_VERSION}"
+    )
+
+    stages{
+        stage('Checkout'){
+            steps{
+                git branch: 'main', url: 'https://github.com/LFPopov/StudentsRegistryApp'     
+            }
+        }
+        stage('Install dependencies'){
+            steps{
+                scrypt{
+                    bat 'npm install'
+                }
+            }
+        }
+
+        stage('Start application and run tests'){
+            steps{
+                scrypt{
+                    bat 'npm start &'
+                    bat 'waiton https://localhost:8082'
+                    bat 'npm test'
+                }
+            }
+        }
+    }
+
+    post{
+        always{
+            echo 'CI pipeline completed'
+        }
+    }
+}
